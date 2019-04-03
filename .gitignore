@@ -7,3 +7,5 @@ etc/*
 logs/*access.log
 coverage
 .nyc_output
+/docker-compose.override.yaml
+/docker-compose.override.yml

@@ -1,0 +1,60 @@
+version: "3.6"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=!ChangeMe!
+      - RABBITMQ_ERLANG_COOKIE=!ChangeMe!
+      - RABBITMQ_USE_LONGNAME=false
+    ports:
+      - target: 15672
+        published: 8080
+        mode: host
+      - target: 5672
+        published: 5672
+        mode: host
+
+  api:
+    environment:
+      - DB_HOST
+      - DB_PORT
+      - DB_NAME
+      - DB_USER
+      - DB_PASSWORD
+      - NODE_ENV=development
+    volumes:
+      - .:/opt/idpapi:rw
+    command: ["node", "/opt/idpapi/bin/www"]
+    image: node:8
+    depends_on:
+      - mongodb
+      - rabbitmq
+    ports:
+      - target: 2456
+        published: 2456
+        protocol: tcp
+        mode: host
+      - target: 4000
+        published: 4000
+        protocol: tcp
+        mode: host
+
+  mongodb:
+    environment:
+      - MONGO_INITDB_DATABASE=idpapi
+      - MONGO_INITDB_ROOT_USERNAME=idpapi
+      - MONGO_INITDB_ROOT_PASSWORD=!ChangeMe!
+    volumes:
+      - data:/data/db
+    image: mongo:4.0
+    ports:
+      - target: 27017
+        published: 27017
+        protocol: tcp
+        mode: host
+
+volumes:
+  data:
+    driver: local
