@@ -1,16 +1,16 @@
 {
-  "hostname" : "host.example.com",
-  "application" : "campusIDP",
+  "hostname": "host.example.com",
+  "application": "campusIDP",
   "http": {
-    "port" : "2456"
+    "port": "2456"
   },
-  "https":{
+  "https": {
     "port": "4000",
-    "cert": "certs/jwt.crt",
-    "key": "certs/jwt.key"
+    "cert": "certs/server.crt",
+    "key": "certs/server.key"
   },
-  "forcehttps" : false,
-  "database" : {
+  "forcehttps": false,
+  "database": {
     "host": "localhost",
     "port": "55132",
     "user": "dbuser",
@@ -27,7 +27,12 @@
     "clockSkew": 120
   },
   "x-api-token": "xyz",
-  "contexts" : {
-    "serviceconf" : "http://geant.org/capusidp/context"
+  "contexts": {
+    "serviceconf": "http://geant.org/capusidp/context"
+  },
+  "amq": {
+    "host": "localhost",
+    "user": "user",
+    "password": "password"
   }
 }
